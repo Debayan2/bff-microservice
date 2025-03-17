@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bff-microservice
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bff-microservice
+  template:
+    metadata:
+      labels:
+        app: bff-microservice
+    spec:
+      containers:
+        - name: bff
+          image: my-dockerhub-username/bff-microservice:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: USER_SERVICE_URL
+              value: "http://user-service/api/users"
+            - name: PRODUCT_SERVICE_URL
+              value: "http://product-service/api/products"
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bff-secret
+                  key: api_key
