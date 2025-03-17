@@ -36,6 +36,9 @@ jobs:
       - name: Debug - List files
         run: ls -l
 
+      - name: Debug - Show current directory
+        run: pwd
+
       - name: Build Docker Image
         run: docker build -t my-dockerhub-username/bff-microservice .
 
